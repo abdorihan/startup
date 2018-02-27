@@ -1,0 +1,696 @@
+-- phpMyAdmin SQL Dump
+-- version 4.2.11
+-- http://www.phpmyadmin.net
+--
+-- Host: 127.0.0.1
+-- Generation Time: Feb 25, 2018 at 01:58 PM
+-- Server version: 5.6.21
+-- PHP Version: 5.6.3
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- Database: `ispdb`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `buy`
+--
+
+CREATE TABLE IF NOT EXISTS `buy` (
+  `eq_id` int(11) NOT NULL,
+  `su_id` int(11) NOT NULL,
+  `st_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `price` decimal(10,0) NOT NULL,
+  `date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer`
+--
+
+CREATE TABLE IF NOT EXISTS `customer` (
+`cu_id` int(11) NOT NULL,
+  `cu_name` varchar(50) NOT NULL,
+  `cu_type` int(1) NOT NULL DEFAULT '0',
+  `cu_city` int(3) NOT NULL,
+  `cu_address` text NOT NULL,
+  `cu_email` varchar(30) NOT NULL,
+  `cu_phone` varchar(15) NOT NULL,
+  `cu_des` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cus_loc`
+--
+
+CREATE TABLE IF NOT EXISTS `cus_loc` (
+  `cu_id` int(11) NOT NULL,
+  `loc_id` int(11) NOT NULL,
+  `date` datetime NOT NULL,
+  `des` text,
+  `ser_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `discount`
+--
+
+CREATE TABLE IF NOT EXISTS `discount` (
+`dis_id` int(11) NOT NULL,
+  `dis_name` varchar(50) NOT NULL,
+  `dis_value` decimal(10,0) NOT NULL,
+  `dis_type` int(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `distributor`
+--
+
+CREATE TABLE IF NOT EXISTS `distributor` (
+`d_id` int(11) NOT NULL,
+  `d_name` varchar(50) NOT NULL,
+  `representative` varchar(50) NOT NULL,
+  `rep_phone` varchar(15) NOT NULL,
+  `d_city` int(3) NOT NULL,
+  `d_address` text,
+  `d_email` varchar(30) NOT NULL,
+  `po_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employee`
+--
+
+CREATE TABLE IF NOT EXISTS `employee` (
+`emp_id` int(11) NOT NULL,
+  `emp_name` varchar(50) NOT NULL,
+  `emp_address` text,
+  `emp_phone` varchar(15) NOT NULL,
+  `emp_email` varchar(30) NOT NULL,
+  `emp_gender` int(1) NOT NULL DEFAULT '1',
+  `password` varbinary(250) NOT NULL,
+  `job_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `employee`
+--
+
+INSERT INTO `employee` (`emp_id`, `emp_name`, `emp_address`, `emp_phone`, `emp_email`, `emp_gender`, `password`, `job_id`) VALUES
+(1, 'abduladim rihan', 'tajoura', '0914567824', 'abdorihan@yahoo.com', 1, 0x39326437646132396161656363316233326238306639343839633161616134313335326163333266, 1),
+(2, 'test', NULL, '0928935974', 'aaa@aaa.aaa', 1, 0x37653234306465373466623165643038666130386433383036336636613661393134363261383135, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `equipment`
+--
+
+CREATE TABLE IF NOT EXISTS `equipment` (
+`eq_id` int(11) NOT NULL,
+  `eq_name` varchar(50) NOT NULL,
+  `brand` varchar(30) NOT NULL,
+  `eq_des` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invoice`
+--
+
+CREATE TABLE IF NOT EXISTS `invoice` (
+`inv_id` int(11) NOT NULL,
+  `inv_date` date NOT NULL,
+  `inv_exp_date` date NOT NULL,
+  `subtotal` decimal(10,0) NOT NULL,
+  `total` decimal(10,0) NOT NULL,
+  `inv_type` int(1) NOT NULL DEFAULT '0',
+  `inv_status` int(1) NOT NULL DEFAULT '1',
+  `inv_des` text,
+  `cu_id` int(11) DEFAULT NULL,
+  `per_id` int(11) DEFAULT NULL,
+  `emp_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inv_dis`
+--
+
+CREATE TABLE IF NOT EXISTS `inv_dis` (
+  `inv_id` int(11) NOT NULL,
+  `dis_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inv_eq`
+--
+
+CREATE TABLE IF NOT EXISTS `inv_eq` (
+  `inv_id` int(11) NOT NULL,
+  `eq_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inv_pack`
+--
+
+CREATE TABLE IF NOT EXISTS `inv_pack` (
+  `inv_id` int(11) NOT NULL,
+  `p_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inv_ser`
+--
+
+CREATE TABLE IF NOT EXISTS `inv_ser` (
+  `inv_id` int(11) NOT NULL,
+  `ser_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inv_tax`
+--
+
+CREATE TABLE IF NOT EXISTS `inv_tax` (
+  `inv_id` int(11) NOT NULL,
+  `tax_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `job`
+--
+
+CREATE TABLE IF NOT EXISTS `job` (
+`job_id` int(11) NOT NULL,
+  `job_name` varchar(50) NOT NULL,
+  `prevs` text NOT NULL,
+  `job_des` text NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `job`
+--
+
+INSERT INTO `job` (`job_id`, `job_name`, `prevs`, `job_des`) VALUES
+(1, 'admin', 'login,add_emp,edit_emp,delete_emp,show_emp,load_emp', 'super admin');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `location`
+--
+
+CREATE TABLE IF NOT EXISTS `location` (
+`loc_id` int(11) NOT NULL,
+  `loc_name` varchar(30) NOT NULL,
+  `loc_city` int(3) NOT NULL,
+  `loc_address` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `package`
+--
+
+CREATE TABLE IF NOT EXISTS `package` (
+`p_id` int(11) NOT NULL,
+  `p_name` varchar(50) NOT NULL,
+  `p_price` decimal(10,0) NOT NULL,
+  `p_des` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pack_eq`
+--
+
+CREATE TABLE IF NOT EXISTS `pack_eq` (
+  `p_id` int(11) NOT NULL,
+  `eq_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pack_ser`
+--
+
+CREATE TABLE IF NOT EXISTS `pack_ser` (
+  `p_id` int(11) NOT NULL,
+  `ser_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `permission`
+--
+
+CREATE TABLE IF NOT EXISTS `permission` (
+`per_id` int(11) NOT NULL,
+  `per_date` date NOT NULL,
+  `per_des` text,
+  `st_id` int(11) NOT NULL,
+  `eq_id` int(11) NOT NULL,
+  `emp_id` int(11) NOT NULL,
+  `tech_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `policy`
+--
+
+CREATE TABLE IF NOT EXISTS `policy` (
+`po_id` int(11) NOT NULL,
+  `po_name` varchar(50) NOT NULL,
+  `po_des` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `service`
+--
+
+CREATE TABLE IF NOT EXISTS `service` (
+`ser_id` int(11) NOT NULL,
+  `ser_name` varchar(50) NOT NULL,
+  `ser_price` decimal(10,0) NOT NULL,
+  `ser_des` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `storage`
+--
+
+CREATE TABLE IF NOT EXISTS `storage` (
+`st_id` int(11) NOT NULL,
+  `st_name` varchar(50) NOT NULL,
+  `st_city` int(3) NOT NULL,
+  `st_area` varchar(50) NOT NULL,
+  `st_phone` varchar(15) NOT NULL,
+  `st_des` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `supplier`
+--
+
+CREATE TABLE IF NOT EXISTS `supplier` (
+`su_id` int(11) NOT NULL,
+  `su_name` varchar(50) NOT NULL,
+  `su_phone` varchar(15) NOT NULL,
+  `representative` varchar(50) NOT NULL,
+  `rep_phone` varchar(15) NOT NULL,
+  `su_email` varchar(30) NOT NULL,
+  `su_type` int(1) NOT NULL DEFAULT '0',
+  `su_des` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tax`
+--
+
+CREATE TABLE IF NOT EXISTS `tax` (
+`tax_id` int(11) NOT NULL,
+  `tax_name` varchar(50) NOT NULL,
+  `tax_value` decimal(10,0) NOT NULL,
+  `tax_type` int(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `buy`
+--
+ALTER TABLE `buy`
+ ADD PRIMARY KEY (`eq_id`,`su_id`,`st_id`,`date`), ADD KEY `su_id` (`su_id`), ADD KEY `st_id` (`st_id`);
+
+--
+-- Indexes for table `customer`
+--
+ALTER TABLE `customer`
+ ADD PRIMARY KEY (`cu_id`), ADD UNIQUE KEY `cu_email` (`cu_email`);
+
+--
+-- Indexes for table `cus_loc`
+--
+ALTER TABLE `cus_loc`
+ ADD PRIMARY KEY (`cu_id`,`loc_id`,`date`,`ser_id`), ADD KEY `loc_id` (`loc_id`), ADD KEY `ser_id` (`ser_id`);
+
+--
+-- Indexes for table `discount`
+--
+ALTER TABLE `discount`
+ ADD PRIMARY KEY (`dis_id`), ADD UNIQUE KEY `dis_name` (`dis_name`);
+
+--
+-- Indexes for table `distributor`
+--
+ALTER TABLE `distributor`
+ ADD PRIMARY KEY (`d_id`), ADD UNIQUE KEY `d_name` (`d_name`,`d_email`), ADD KEY `po_id` (`po_id`);
+
+--
+-- Indexes for table `employee`
+--
+ALTER TABLE `employee`
+ ADD PRIMARY KEY (`emp_id`), ADD UNIQUE KEY `emp_email` (`emp_email`), ADD KEY `job_id` (`job_id`);
+
+--
+-- Indexes for table `equipment`
+--
+ALTER TABLE `equipment`
+ ADD PRIMARY KEY (`eq_id`), ADD UNIQUE KEY `eq_name` (`eq_name`);
+
+--
+-- Indexes for table `invoice`
+--
+ALTER TABLE `invoice`
+ ADD PRIMARY KEY (`inv_id`), ADD KEY `cu_id` (`cu_id`), ADD KEY `per_id` (`per_id`), ADD KEY `emp_id` (`emp_id`);
+
+--
+-- Indexes for table `inv_dis`
+--
+ALTER TABLE `inv_dis`
+ ADD PRIMARY KEY (`inv_id`,`dis_id`), ADD KEY `dis_id` (`dis_id`);
+
+--
+-- Indexes for table `inv_eq`
+--
+ALTER TABLE `inv_eq`
+ ADD PRIMARY KEY (`inv_id`,`eq_id`), ADD KEY `eq_id` (`eq_id`);
+
+--
+-- Indexes for table `inv_pack`
+--
+ALTER TABLE `inv_pack`
+ ADD PRIMARY KEY (`inv_id`,`p_id`), ADD KEY `p_id` (`p_id`);
+
+--
+-- Indexes for table `inv_ser`
+--
+ALTER TABLE `inv_ser`
+ ADD PRIMARY KEY (`inv_id`,`ser_id`), ADD KEY `ser_id` (`ser_id`);
+
+--
+-- Indexes for table `inv_tax`
+--
+ALTER TABLE `inv_tax`
+ ADD PRIMARY KEY (`inv_id`,`tax_id`), ADD KEY `tax_id` (`tax_id`);
+
+--
+-- Indexes for table `job`
+--
+ALTER TABLE `job`
+ ADD PRIMARY KEY (`job_id`), ADD UNIQUE KEY `job_name` (`job_name`);
+
+--
+-- Indexes for table `location`
+--
+ALTER TABLE `location`
+ ADD PRIMARY KEY (`loc_id`), ADD UNIQUE KEY `loc_name` (`loc_name`);
+
+--
+-- Indexes for table `package`
+--
+ALTER TABLE `package`
+ ADD PRIMARY KEY (`p_id`), ADD UNIQUE KEY `p_name` (`p_name`);
+
+--
+-- Indexes for table `pack_eq`
+--
+ALTER TABLE `pack_eq`
+ ADD PRIMARY KEY (`p_id`,`eq_id`), ADD KEY `eq_id` (`eq_id`);
+
+--
+-- Indexes for table `pack_ser`
+--
+ALTER TABLE `pack_ser`
+ ADD PRIMARY KEY (`p_id`,`ser_id`), ADD KEY `ser_id` (`ser_id`);
+
+--
+-- Indexes for table `permission`
+--
+ALTER TABLE `permission`
+ ADD PRIMARY KEY (`per_id`), ADD KEY `st_id` (`st_id`), ADD KEY `eq_id` (`eq_id`), ADD KEY `emp_id` (`emp_id`), ADD KEY `tech_id` (`tech_id`);
+
+--
+-- Indexes for table `policy`
+--
+ALTER TABLE `policy`
+ ADD PRIMARY KEY (`po_id`), ADD UNIQUE KEY `po_name` (`po_name`);
+
+--
+-- Indexes for table `service`
+--
+ALTER TABLE `service`
+ ADD PRIMARY KEY (`ser_id`), ADD UNIQUE KEY `ser_name` (`ser_name`);
+
+--
+-- Indexes for table `storage`
+--
+ALTER TABLE `storage`
+ ADD PRIMARY KEY (`st_id`);
+
+--
+-- Indexes for table `supplier`
+--
+ALTER TABLE `supplier`
+ ADD PRIMARY KEY (`su_id`), ADD UNIQUE KEY `su_name` (`su_name`), ADD UNIQUE KEY `su_email` (`su_email`);
+
+--
+-- Indexes for table `tax`
+--
+ALTER TABLE `tax`
+ ADD PRIMARY KEY (`tax_id`), ADD UNIQUE KEY `tax_name` (`tax_name`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `customer`
+--
+ALTER TABLE `customer`
+MODIFY `cu_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `discount`
+--
+ALTER TABLE `discount`
+MODIFY `dis_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `distributor`
+--
+ALTER TABLE `distributor`
+MODIFY `d_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `employee`
+--
+ALTER TABLE `employee`
+MODIFY `emp_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `equipment`
+--
+ALTER TABLE `equipment`
+MODIFY `eq_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `invoice`
+--
+ALTER TABLE `invoice`
+MODIFY `inv_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `job`
+--
+ALTER TABLE `job`
+MODIFY `job_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `location`
+--
+ALTER TABLE `location`
+MODIFY `loc_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `package`
+--
+ALTER TABLE `package`
+MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `permission`
+--
+ALTER TABLE `permission`
+MODIFY `per_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `policy`
+--
+ALTER TABLE `policy`
+MODIFY `po_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `service`
+--
+ALTER TABLE `service`
+MODIFY `ser_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `storage`
+--
+ALTER TABLE `storage`
+MODIFY `st_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `supplier`
+--
+ALTER TABLE `supplier`
+MODIFY `su_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `tax`
+--
+ALTER TABLE `tax`
+MODIFY `tax_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `buy`
+--
+ALTER TABLE `buy`
+ADD CONSTRAINT `buy_ibfk_1` FOREIGN KEY (`eq_id`) REFERENCES `equipment` (`eq_id`) ON UPDATE CASCADE,
+ADD CONSTRAINT `buy_ibfk_2` FOREIGN KEY (`su_id`) REFERENCES `supplier` (`su_id`) ON UPDATE CASCADE,
+ADD CONSTRAINT `buy_ibfk_3` FOREIGN KEY (`st_id`) REFERENCES `storage` (`st_id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `cus_loc`
+--
+ALTER TABLE `cus_loc`
+ADD CONSTRAINT `cus_loc_ibfk_1` FOREIGN KEY (`cu_id`) REFERENCES `customer` (`cu_id`) ON UPDATE CASCADE,
+ADD CONSTRAINT `cus_loc_ibfk_2` FOREIGN KEY (`loc_id`) REFERENCES `location` (`loc_id`) ON UPDATE CASCADE,
+ADD CONSTRAINT `cus_loc_ibfk_3` FOREIGN KEY (`ser_id`) REFERENCES `service` (`ser_id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `distributor`
+--
+ALTER TABLE `distributor`
+ADD CONSTRAINT `distributor_ibfk_1` FOREIGN KEY (`po_id`) REFERENCES `policy` (`po_id`);
+
+--
+-- Constraints for table `employee`
+--
+ALTER TABLE `employee`
+ADD CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`job_id`) REFERENCES `job` (`job_id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `invoice`
+--
+ALTER TABLE `invoice`
+ADD CONSTRAINT `invoice_ibfk_1` FOREIGN KEY (`cu_id`) REFERENCES `customer` (`cu_id`) ON UPDATE CASCADE,
+ADD CONSTRAINT `invoice_ibfk_2` FOREIGN KEY (`per_id`) REFERENCES `permission` (`per_id`) ON UPDATE CASCADE,
+ADD CONSTRAINT `invoice_ibfk_3` FOREIGN KEY (`emp_id`) REFERENCES `employee` (`emp_id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `inv_dis`
+--
+ALTER TABLE `inv_dis`
+ADD CONSTRAINT `inv_dis_ibfk_1` FOREIGN KEY (`inv_id`) REFERENCES `invoice` (`inv_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `inv_dis_ibfk_2` FOREIGN KEY (`dis_id`) REFERENCES `discount` (`dis_id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `inv_eq`
+--
+ALTER TABLE `inv_eq`
+ADD CONSTRAINT `inv_eq_ibfk_1` FOREIGN KEY (`inv_id`) REFERENCES `invoice` (`inv_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `inv_eq_ibfk_2` FOREIGN KEY (`eq_id`) REFERENCES `equipment` (`eq_id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `inv_pack`
+--
+ALTER TABLE `inv_pack`
+ADD CONSTRAINT `inv_pack_ibfk_1` FOREIGN KEY (`inv_id`) REFERENCES `invoice` (`inv_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `inv_pack_ibfk_2` FOREIGN KEY (`p_id`) REFERENCES `package` (`p_id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `inv_ser`
+--
+ALTER TABLE `inv_ser`
+ADD CONSTRAINT `inv_ser_ibfk_1` FOREIGN KEY (`inv_id`) REFERENCES `invoice` (`inv_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `inv_ser_ibfk_2` FOREIGN KEY (`ser_id`) REFERENCES `service` (`ser_id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `inv_tax`
+--
+ALTER TABLE `inv_tax`
+ADD CONSTRAINT `inv_tax_ibfk_1` FOREIGN KEY (`inv_id`) REFERENCES `invoice` (`inv_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `inv_tax_ibfk_2` FOREIGN KEY (`tax_id`) REFERENCES `tax` (`tax_id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `pack_eq`
+--
+ALTER TABLE `pack_eq`
+ADD CONSTRAINT `pack_eq_ibfk_1` FOREIGN KEY (`p_id`) REFERENCES `package` (`p_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `pack_eq_ibfk_2` FOREIGN KEY (`eq_id`) REFERENCES `equipment` (`eq_id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `pack_ser`
+--
+ALTER TABLE `pack_ser`
+ADD CONSTRAINT `pack_ser_ibfk_1` FOREIGN KEY (`p_id`) REFERENCES `package` (`p_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `pack_ser_ibfk_2` FOREIGN KEY (`ser_id`) REFERENCES `service` (`ser_id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `permission`
+--
+ALTER TABLE `permission`
+ADD CONSTRAINT `permission_ibfk_1` FOREIGN KEY (`st_id`) REFERENCES `storage` (`st_id`) ON UPDATE CASCADE,
+ADD CONSTRAINT `permission_ibfk_2` FOREIGN KEY (`eq_id`) REFERENCES `equipment` (`eq_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `permission_ibfk_3` FOREIGN KEY (`emp_id`) REFERENCES `employee` (`emp_id`) ON UPDATE CASCADE,
+ADD CONSTRAINT `permission_ibfk_4` FOREIGN KEY (`tech_id`) REFERENCES `employee` (`emp_id`) ON UPDATE CASCADE;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
